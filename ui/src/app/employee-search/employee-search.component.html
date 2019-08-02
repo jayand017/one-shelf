@@ -1,0 +1,10 @@
+<div class="card border-info mb-3" >
+    <div class="card-header">
+        <p-autoComplete [minLength]="3" placeholder="Enter 3 characters..." [(ngModel)]="text" [suggestions]="results"
+            (completeMethod)="search($event)" (onSelect)="details($event)" (onClear)="clear()" field="name"></p-autoComplete>
+    </div>
+    <div class="card-body text-info" *ngIf="showCards">
+        <h5 class="card-title">I am {{name}}</h5>
+        <p class="card-text">I stay at {{location}}, I expertise in {{skills}}</p>
+    </div>
+</div>
