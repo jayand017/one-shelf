@@ -24,14 +24,14 @@ employee.get("/api/employee/one/:id", (req, res) => {
 
 employee.get("/api/employee/search/:q", (req, res) => {
     const client = new MongoClient(conn.uri, { useNewUrlParser: true});
-    client.connect(err => {
+    client.connect(err => {   
         if(err) {
             return  res.status(403).send(err);
         }
         const col = client.db(conn.dbName).collection(conn.colEmp)
         col.find({$or: [{"first_name": {$regex: `.*${req.params.q}.*`, $options: 'i'}}, 
                         {"last_name": {$regex: `.*${req.params.q}.*`, $options: 'i'}}
-                    ]}).toArray((err, result) => {
+                    ]}).project({first_name: 1, last_name : 1}).toArray((err, result) => {
             if(err) {
                 return res.status(503).send(err);
             }
